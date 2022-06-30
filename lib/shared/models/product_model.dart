@@ -36,4 +36,15 @@ class ProductModel {
     return List<ProductModel>.from(
         jsonData.map((x) => ProductModel.fromJson(x)));
   }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "category": category,
+        "image": image,
+        "price": price,
+        "material": material,
+        "department": department,
+      };
 }

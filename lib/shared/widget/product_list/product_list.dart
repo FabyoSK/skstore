@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/widget/product_card/product_card.dart';
+import 'package:provider/provider.dart';
 
 class ProductList extends StatefulWidget {
   final List<ProductModel> productList;
@@ -17,13 +18,21 @@ class ProductList extends StatefulWidget {
 class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
+    final cart = context.watch<CartModel>();
+
     return ListView.builder(
-      itemCount: widget.productList.length,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: 5,
       itemBuilder: (context, index) {
+        final product = widget.productList[index];
         return ProductCard(
-          product: widget.productList[index],
+          product: product,
           onTap: () {
-            widget.onCardTap(context, widget.productList[index]);
+            widget.onCardTap(context, product);
+          },
+          onCartButtonTap: () {
+            cart.add(product);
           },
         );
       },

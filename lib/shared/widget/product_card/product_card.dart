@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:store/shared/models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
   final VoidCallback onTap;
-  const ProductCard({Key? key, required this.product, required this.onTap})
+  final VoidCallback onCartButtonTap;
+
+  const ProductCard(
+      {Key? key,
+      required this.product,
+      required this.onTap,
+      required this.onCartButtonTap})
       : super(key: key);
 
   @override
@@ -14,43 +19,66 @@ class ProductCard extends StatelessWidget {
       onTap: onTap,
       child: Card(
         elevation: 4.0,
-        child: Container(
-          width: 300,
-          height: 300,
-          child: Column(
-            children: [
-              ListTile(
-                title: Text(product.name),
-                subtitle: Text(product.description),
-                trailing: Icon(Icons.favorite_outline),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: Image.network(
+                product.image,
               ),
-              // Container(
-              //   // height: 200.0,
-              //   // width: 200.0,
-              //   child: Image.network(
-              //     product.image,
-              //     fit: BoxFit.fill,
-              //   ),
-              // ),
-              // Container(
-              //   padding: EdgeInsets.all(16.0),
-              //   alignment: Alignment.centerLeft,
-              //   child: Text(product.description),
-              // ),
-              // ButtonBar(
-              //   children: [
-              //     TextButton(
-              //       child: const Text('CONTACT AGENT'),
-              //       onPressed: () {/* ... */},
-              //     ),
-              //     TextButton(
-              //       child: const Text('LEARN MORE'),
-              //       onPressed: () {/* ... */},
-              //     )
-              //   ],
-              // )
-            ],
-          ),
+              height: 250.0,
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 8.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    product.name,
+                    style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                  ),
+                  SizedBox(
+                    height: 2.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        "\$${product.price}",
+                        style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                      // Text(
+                      //   "$discount\% off",
+                      //   style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                      // ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                ],
+              ),
+            ),
+            ButtonBar(
+              children: [
+                ElevatedButton(onPressed: onCartButtonTap, child: Text('Add'))
+              ],
+            )
+          ],
         ),
       ),
     );
