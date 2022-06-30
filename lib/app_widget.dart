@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store/modules/home/home_page.dart';
+import 'package:store/modules/login/login_page.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -11,9 +12,10 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.amberAccent,
       ),
-      initialRoute: "/home",
+      initialRoute: "/login",
       routes: {
         "/home": (context) => HomePage(),
+        "/login": (context) => LoginPage(),
       },
     );
   }
