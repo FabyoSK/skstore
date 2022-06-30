@@ -27,12 +27,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void goToProductDetailPage(BuildContext context, String id) {
-    Navigator.pushNamed(
-      context,
-      "product_detail",
-      arguments: {'product_id': id},
-    );
+  void goToProductDetailPage(BuildContext context, ProductModel product) {
+    Navigator.pushNamed(context, "/product_detail", arguments: product);
   }
 
   @override
@@ -55,9 +51,7 @@ class _HomePageState extends State<HomePage> {
             } else if (snapshot.hasData) {
               return ProductList(
                 productList: snapshot.data!,
-                onCardTap: (String id) {
-                  goToProductDetailPage(context, id);
-                },
+                onCardTap: goToProductDetailPage,
               );
             } else {
               return const Text('Empty data');

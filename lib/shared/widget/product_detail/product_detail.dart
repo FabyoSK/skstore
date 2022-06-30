@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:store/shared/models/product_model.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductDetail extends StatelessWidget {
   final ProductModel product;
-  final VoidCallback onTap;
-  const ProductCard({Key? key, required this.product, required this.onTap})
-      : super(key: key);
+
+  const ProductDetail({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        // onTap(product.id);
+      },
       child: Card(
         elevation: 4.0,
         child: Container(
@@ -24,14 +25,14 @@ class ProductCard extends StatelessWidget {
                 subtitle: Text(product.description),
                 trailing: Icon(Icons.favorite_outline),
               ),
-              // Container(
-              //   // height: 200.0,
-              //   // width: 200.0,
-              //   child: Image.network(
-              //     product.image,
-              //     fit: BoxFit.fill,
-              //   ),
-              // ),
+              Container(
+                // height: 200.0,
+                // width: 200.0,
+                child: Image.network(
+                  'https://placeimg.com/640/480/any',
+                  fit: BoxFit.fill,
+                ),
+              ),
               // Container(
               //   padding: EdgeInsets.all(16.0),
               //   alignment: Alignment.centerLeft,

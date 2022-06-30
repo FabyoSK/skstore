@@ -5,7 +5,7 @@ import 'package:store/shared/widget/product_card/product_card.dart';
 
 class ProductList extends StatefulWidget {
   final List<ProductModel> productList;
-  final Function(String) onCardTap;
+  final Function(BuildContext, ProductModel) onCardTap;
   const ProductList(
       {Key? key, required this.productList, required this.onCardTap})
       : super(key: key);
@@ -17,16 +17,16 @@ class ProductList extends StatefulWidget {
 class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        itemCount: widget.productList.length,
-        itemBuilder: (context, index) {
-          return ProductCard(
-            product: widget.productList[index],
-            onTap: widget.onCardTap(widget.productList[index].id),
-          );
-        },
-      ),
+    return ListView.builder(
+      itemCount: widget.productList.length,
+      itemBuilder: (context, index) {
+        return ProductCard(
+          product: widget.productList[index],
+          onTap: () {
+            widget.onCardTap(context, widget.productList[index]);
+          },
+        );
+      },
     );
   }
 }
