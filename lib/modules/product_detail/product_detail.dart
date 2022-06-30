@@ -3,47 +3,42 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:store/shared/api/api_endpoint.dart';
 import 'package:store/shared/models/product_model.dart';
-import 'package:store/shared/widget/product_list/product_list.dart';
+import 'package:store/shared/widget/product_detail/product_detail.dart';
 import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class ProductDetailPage extends StatefulWidget {
+  const ProductDetailPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProductDetailPage> createState() => _ProductDetailStatePage();
 }
 
-class _HomePageState extends State<HomePage> {
-  Future<List<ProductModel>> getProducts() async {
-    final url =
-        Uri.parse(ApiEndpoint.resolve_endpoint(ApiEndpoint.get_products));
+class _ProductDetailStatePage extends State<ProductDetailPage> {
+  Future<ProductModel> getProductDetailPage() async {
+    // final product_id = ModalRoute.of(context)!.settings.arguments;
+    final product_id = "1";
+
+    final url = Uri.parse(
+        ApiEndpoint.resolve_endpoint(ApiEndpoint.get_product + product_id));
 
     final response = await http.get(url);
+    final responseJson = jsonDecode(response.body.toString());
     if (response.statusCode == 200) {
-      return ProductModel.allProductFromJson(response.body.toString());
+      return ProductModel.fromJson(responseJson);
     } else {
-      final errorResponse = jsonDecode(response.body.toString());
-      return Future.error(errorResponse["error"]);
+      return Future.error(responseJson["error"]);
     }
-  }
-
-  void goToProductDetailPage(BuildContext context, String id) {
-    Navigator.pushNamed(
-      context,
-      "product_detail",
-      arguments: {'product_id': id},
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      body: FutureBuilder<List<ProductModel>>(
-        future: getProducts(),
+      body: FutureBuilder<ProductModel>(
+        future: getProductDetailPage(),
         builder: (
           BuildContext context,
-          AsyncSnapshot<List<ProductModel>> snapshot,
+          AsyncSnapshot<ProductModel> snapshot,
         ) {
           print(snapshot.connectionState);
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -53,12 +48,7 @@ class _HomePageState extends State<HomePage> {
               print(snapshot.error);
               return const Text('Error2');
             } else if (snapshot.hasData) {
-              return ProductList(
-                productList: snapshot.data!,
-                onCardTap: (String id) {
-                  goToProductDetailPage(context, id);
-                },
-              );
+              return ProductDetail(product: snapshot.data!);
             } else {
               return const Text('Empty data');
             }

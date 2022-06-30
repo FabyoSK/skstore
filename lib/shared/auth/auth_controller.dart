@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:store/shared/models/app_colors.dart';
+import 'package:store/shared/api/api_endpoint.dart';
 import 'package:store/shared/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
