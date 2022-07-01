@@ -5,21 +5,19 @@ import 'package:store/shared/utils/format_currency.dart';
 class ProductCard extends StatelessWidget {
   final ProductModel product;
   final VoidCallback onTap;
-  final VoidCallback onCartButtonTap;
 
-  const ProductCard(
-      {Key? key,
-      required this.product,
-      required this.onTap,
-      required this.onCartButtonTap})
-      : super(key: key);
+  const ProductCard({
+    Key? key,
+    required this.product,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Card(
-        elevation: 4.0,
+        elevation: 1,
         child: Container(
           width: 300,
           child: Column(
@@ -31,7 +29,7 @@ class ProductCard extends StatelessWidget {
                   product.image,
                   fit: BoxFit.cover,
                 ),
-                height: 150,
+                height: 200,
                 width: 300,
               ),
               SizedBox(
@@ -78,14 +76,6 @@ class ProductCard extends StatelessWidget {
                   ],
                 ),
               ),
-              ButtonBar(
-                children: [
-                  ElevatedButton(
-                    onPressed: onCartButtonTap,
-                    child: Icon(Icons.shopping_cart),
-                  )
-                ],
-              )
             ],
           ),
         ),

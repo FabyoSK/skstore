@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:store/shared/auth/auth_controller.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String email = 'fabio.alves@chuva.io';
-  String password = 'password';
+class _RegisterPageState extends State<RegisterPage> {
+  String name = '';
+  String email = '';
+  String password = '';
 
   final authController = AuthController();
 
@@ -24,7 +25,18 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('Login'),
+              Text('Register'),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter your name',
+                  labelText: 'Name',
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    name = value;
+                  });
+                },
+              ),
               TextFormField(
                 decoration: const InputDecoration(
                   hintText: 'Enter your email',
@@ -51,8 +63,9 @@ class _LoginPageState extends State<LoginPage> {
               TextButton(
                 child: const Text('Login'),
                 onPressed: () async {
-                  await authController.login(email, password);
-                  // .then((r) => {Navigator.pushNamed(context, "/")})
+                  await authController
+                      .register(name, email, password)
+                      .then((r) => {Navigator.pushNamed(context, "/home")});
                   // .catchError((error) => {
                   //       // handle Error
                   //       print(error)

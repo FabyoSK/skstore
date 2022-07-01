@@ -1,6 +1,7 @@
 class ApiEndpoint {
   static final api_url = 'http://localhost:3333';
   static final create_user = '/users';
+  static final create_session = '/sessions';
 
   static final get_products = '/products/';
 
