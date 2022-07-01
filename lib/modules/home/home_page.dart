@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                     return const CircularProgressIndicator();
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
-                      return const Text('Error2');
+                      return Text(snapshot.error.toString());
                     } else if (snapshot.hasData) {
                       return ProductList(
                         productList: snapshot.data!,

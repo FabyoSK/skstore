@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/utils/format_currency.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
@@ -11,6 +12,29 @@ class ProductCard extends StatelessWidget {
     required this.product,
     required this.onTap,
   }) : super(key: key);
+
+  Widget sliderPlugin(images) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 200,
+        autoPlayInterval: Duration(seconds: 4),
+        autoPlay: true,
+      ),
+      items: images.map<Widget>(
+        (i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return Container(
+                height: 200,
+                width: 300,
+                child: Image.network(i, fit: BoxFit.cover),
+              );
+            },
+          );
+        },
+      ).toList(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +49,12 @@ class ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                child: Image.network(
-                  product.image,
-                  fit: BoxFit.cover,
-                ),
+                child: product.image != null
+                    ? Image.network(
+                        product.image!,
+                        fit: BoxFit.cover,
+                      )
+                    : sliderPlugin(product.gallery),
                 height: 200,
                 width: 300,
               ),
