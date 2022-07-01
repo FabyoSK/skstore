@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:store/shared/header/header.dart';
 import 'package:store/shared/api/api_endpoint.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
-import 'package:store/shared/widget/product_card/product_card.dart';
 import 'package:store/shared/widget/product_list/product_list.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,14 +37,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
-    var x = cart.getProducts().length;
+    var cartProductCount = cart.getProducts().length;
     return Scaffold(
       backgroundColor: Colors.blue,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: Header(),
+      ),
       body: Column(
         children: [
-          Text(x.toString()),
+          Text(cartProductCount.toString()),
           Container(
-            width: 900,
+            // width: 1000,
+            alignment: Alignment.center,
             child: FutureBuilder<List<ProductModel>>(
               future: getProducts(),
               builder: (

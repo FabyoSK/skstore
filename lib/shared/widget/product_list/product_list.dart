@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/widget/product_card/product_card.dart';
 import 'package:provider/provider.dart';
 
-class ProductList extends StatefulWidget {
+class ProductList extends StatelessWidget {
   final List<ProductModel> productList;
   final Function(BuildContext, ProductModel) onCardTap;
   const ProductList(
@@ -12,30 +13,30 @@ class ProductList extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ProductList> createState() => _ProductListState();
-}
-
-class _ProductListState extends State<ProductList> {
-  @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
-
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        final product = widget.productList[index];
-        return ProductCard(
-          product: product,
-          onTap: () {
-            widget.onCardTap(context, product);
-          },
-          onCartButtonTap: () {
-            cart.add(product);
-          },
-        );
-      },
+    return Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Wrap(
+          children: <Widget>[
+            for (final product in productList)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ProductCard(
+                  key: ValueKey(product.id),
+                  product: product,
+                  onTap: () {
+                    onCardTap(context, product);
+                  },
+                  onCartButtonTap: () {
+                    cart.add(product);
+                  },
+                ),
+              )
+          ],
+        ),
+      ),
     );
   }
 }

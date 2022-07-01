@@ -19,7 +19,7 @@ class AppWidget extends StatelessWidget {
           primaryColor: Colors.amberAccent,
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: "/product_detail",
+        initialRoute: "/home",
         routes: {
           "/home": (context) => HomePage(),
           "/login": (context) => LoginPage(),
