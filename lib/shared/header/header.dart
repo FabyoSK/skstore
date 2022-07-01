@@ -13,6 +13,14 @@ class Header extends StatefulWidget {
 class _HeaderState extends State<Header> {
   String searchQuery = "";
 
+  void goToHomePage(BuildContext context) {
+    Navigator.pushNamed(context, "/home");
+  }
+
+  void goToShoppingCartPage(BuildContext context) {
+    Navigator.pushNamed(context, "/shoppingcart");
+  }
+
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
@@ -24,7 +32,7 @@ class _HeaderState extends State<Header> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("SK Shop"),
+          InkWell(onTap: () => goToHomePage(context), child: Text("SK Shop")),
           SizedBox(
             width: 400,
             child: TextFormField(
@@ -46,7 +54,9 @@ class _HeaderState extends State<Header> {
           ),
           Badge(
             badgeContent: Text(cartProductCount.toString()),
-            child: Icon(Icons.shopping_cart_checkout),
+            child: InkWell(
+                onTap: () => goToShoppingCartPage(context),
+                child: Icon(Icons.shopping_cart_checkout)),
           )
         ],
       ),

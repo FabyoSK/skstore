@@ -15,8 +15,9 @@ class CartModel extends ChangeNotifier {
         json.decode(instance.getString("cart")!) as List<ProductModel>;
 
     _products.addAll(spProducts);
-    print("FSK $_products");
-    if (spProducts.isNotEmpty) {}
+    // print("FSK $spProducts");
+    // print("FSK $_products");
+    // if (spProducts.isNotEmpty) {}
   }
 
   void add(ProductModel item) async {

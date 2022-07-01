@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:store/shared/models/product_model.dart';
-import 'package:store/shared/utils/format_currency.dart';
 
-class ProductCard extends StatelessWidget {
+class ShoppingCartProductCard extends StatelessWidget {
   final ProductModel product;
   final VoidCallback onTap;
   final VoidCallback onCartButtonTap;
 
-  const ProductCard(
+  const ShoppingCartProductCard(
       {Key? key,
       required this.product,
       required this.onTap,
@@ -57,7 +56,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(
-                          FormatCurrency.format(double.parse(product.price)),
+                          "\$${product.price}",
                           style: TextStyle(fontSize: 16.0, color: Colors.black),
                         ),
                         SizedBox(
