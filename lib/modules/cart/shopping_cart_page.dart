@@ -4,7 +4,6 @@ import 'package:store/shared/header/header.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/utils/format_currency.dart';
-import 'package:store/shared/widget/shopping_cart_product_card/shopping_cart_product_card.dart';
 import 'package:store/shared/widget/shopping_cart_product_list/shopping_cart_product_list.dart';
 
 class ShoppingCartPage extends StatefulWidget {
@@ -15,32 +14,39 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
+  String totalSum = "0";
+
   Future<List<ProductModel>> getShoppingCartProduct(CartModel cart) async {
     return cart.getProducts();
   }
 
-  String calculateTotal(List<ProductModel> products) {
+  void goToCheckoutPage(BuildContext context, List<ProductModel> products) {
+    Navigator.pushNamed(context, "/checkout", arguments: products);
+  }
+
+  void calculateTotal(List<ProductModel> products) {
     double sum = 0;
-    products.forEach((product) {
+    for (ProductModel product in products) {
       final price = double.parse(product.price);
+      final totalPrice = price * product.quantity;
+      sum += totalPrice;
+    }
 
-      sum += price;
+    setState(() {
+      totalSum = FormatCurrency.format(sum);
     });
-
-    return FormatCurrency.format(sum);
   }
 
   Widget header(cartProductCount) {
     return Card(
-      elevation: 2.0,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(30),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Shopping Card"),
-            Text(cartProductCount.toString()),
+            Text("Shopping Card ($cartProductCount)"),
           ],
         ),
       ),
@@ -48,10 +54,11 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   }
 
   Widget total(CartModel cart) {
+    calculateTotal(cart.getProducts());
     return Expanded(
       flex: 2,
       child: Card(
-        elevation: 2.0,
+        elevation: 0,
         child: Padding(
           padding: const EdgeInsets.all(30),
           child: Column(
@@ -64,7 +71,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("total"),
-                  Text(calculateTotal(cart.getProducts())),
+                  Text(totalSum),
                 ],
               ),
               Padding(
@@ -73,7 +80,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                   children: [
                     Expanded(
                         child: ElevatedButton(
-                            onPressed: () {}, child: Text('Checkout'))),
+                            onPressed: () {
+                              goToCheckoutPage(context, cart.getProducts());
+                            },
+                            child: Text('Checkout'))),
                   ],
                 ),
               )
@@ -84,13 +94,15 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     );
   }
 
+  refresh() {
+    setState(() {});
+  }
+
   Widget renderList(CartModel cart) {
-    // cart.bootstrapInitialProducts();
-    return Container(
-      child: ShoppingCartProductList(
-        productList: cart.getProducts(),
-        onCardTap: (context, b) {},
-      ),
+    return ShoppingCartProductList(
+      productList: cart.getProducts(),
+      notifyParent: refresh,
+      onCardTap: (context, b) {},
     );
   }
 
@@ -100,7 +112,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     var cartProductCount = cart.getProducts().length;
 
     return Scaffold(
-      backgroundColor: Colors.blue,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: Header(),
@@ -112,7 +123,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
           Expanded(
             flex: 4,
             child: Column(
-              children: [header(cartProductCount), renderList(cart)],
+              children: [
+                header(cartProductCount),
+                renderList(cart),
+              ],
             ),
           ),
           total(cart),

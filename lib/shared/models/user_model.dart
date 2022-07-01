@@ -15,7 +15,7 @@ class UserModel {
     return UserModel(
       name: map['name'],
       email: map['email'],
-      accessToken: map['accessToken'],
+      accessToken: map['token'],
     );
   }
 

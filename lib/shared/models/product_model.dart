@@ -9,6 +9,7 @@ class ProductModel {
   String price;
   String department;
   String material;
+  int quantity = 1;
 
   ProductModel(
       {required this.id,
@@ -47,4 +48,8 @@ class ProductModel {
         "material": material,
         "department": department,
       };
+
+  void setQuantity(newQuantity) {
+    quantity = newQuantity;
+  }
 }
