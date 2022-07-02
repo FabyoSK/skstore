@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:store/shared/api/api_endpoint.dart';
+import 'package:store/modules/order/order_controller.dart';
 import 'package:store/shared/models/order_model.dart';
 import 'package:store/shared/utils/format_currency.dart';
 import 'package:store/shared/themes/app_text_styles.dart';
-import 'package:http/http.dart' as http;
 import 'package:store/shared/widget/page_wrapper/page_wrapper.dart';
 
 class OrdersPage extends StatefulWidget {
@@ -18,18 +15,7 @@ class OrdersPage extends StatefulWidget {
 class _OrdersPageState extends State<OrdersPage> {
   String totalSum = "0";
   Order? currentOrder;
-
-  Future<List<Order>> getOrders() async {
-    final url = Uri.parse(ApiEndpoint.resolve_endpoint(ApiEndpoint.get_orders));
-
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      return Order.allOrdersFromJson(response.body.toString());
-    } else {
-      final errorResponse = jsonDecode(response.body.toString());
-      return Future.error(errorResponse["error"]);
-    }
-  }
+  OrderController controller = OrderController();
 
   String calculateTotal(List<Product> products) {
     double sum = 0;
@@ -192,7 +178,7 @@ class _OrdersPageState extends State<OrdersPage> {
                 children: [
                   _buildHeader(),
                   FutureBuilder<List<Order>>(
-                    future: getOrders(),
+                    future: controller.getOrders(),
                     builder: (
                       BuildContext context,
                       AsyncSnapshot<List<Order>> snapshot,

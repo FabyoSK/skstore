@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store/restart_widget.dart';
 import 'package:store/shared/auth/auth_controller.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -75,7 +76,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () async {
                   await authController
                       .register(name, email, password)
-                      .then((r) => {Navigator.pushNamed(context, "/home")})
+                      .then((r) => {
+                            RestartWidget.restartApp(context),
+                            Navigator.pushNamed(context, "/home"),
+                          })
                       .catchError((error) => {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(error),

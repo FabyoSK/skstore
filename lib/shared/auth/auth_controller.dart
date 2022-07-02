@@ -26,7 +26,6 @@ class AuthController {
       body: json.encode(body),
     );
 
-    print(response.body.toString());
     if (response.statusCode == 200) {
       _user = UserModel.fromJson(response.body.toString());
       final instance = await SharedPreferences.getInstance();
