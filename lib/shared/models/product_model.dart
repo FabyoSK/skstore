@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class ProductModel {
   String id;
+  String supplierId;
   String name;
   String description;
   String? category;
@@ -24,10 +25,12 @@ class ProductModel {
     required this.material,
     this.gallery,
     this.discount,
+    required this.supplierId,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json['id'],
+        supplierId: json['supplier_id'],
         name: json['name'],
         description: json['description'],
         category: json['category'],
@@ -46,17 +49,16 @@ class ProductModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-        "category": category,
-        "image": image,
-        "price": price,
-        "material": material,
-        "department": department,
+        'id': id,
+        'supplier_id': supplierId,
+        'name': name,
+        'description': description,
+        'category': category,
+        'image': image,
+        'gallery': gallery,
+        'price': price,
+        'discount': discount,
+        'department': department,
+        'material': material,
       };
-
-  void setQuantity(newQuantity) {
-    quantity = newQuantity;
-  }
 }

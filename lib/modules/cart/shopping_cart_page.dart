@@ -89,15 +89,16 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: ElevatedButton(
-                            onPressed: () {
-                              goToCheckoutPage(context, cart.getProducts());
-                            },
-                            child: Text('Checkout'))),
-                  ],
+                child: Expanded(
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            goToCheckoutPage(context, cart.getProducts());
+                          },
+                          child: Text('Checkout')),
+                    ],
+                  ),
                 ),
               )
             ],

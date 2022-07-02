@@ -15,22 +15,56 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  ProductModel product = ProductModel(
-    id: "id",
-    name: "Handcrafted Rubber Towels",
-    description:
-        "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
-    price: "00",
-    material: "jj",
-    gallery: [
-      'http://placeimg.com/640/480/cats',
-      'http://placeimg.com/640/480/transport',
-      'http://placeimg.com/640/480/nature',
-      'http://placeimg.com/640/480/people'
-    ],
-  );
+  late ProductModel product;
+  //ProductModel(
+  //   id: "id",
+  //   name: "Handcrafted Rubber Towels",
+  //   description:
+  //       "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+  //   price: "00",
+  //   material: "jj",
+  //   gallery: [
+  //     'http://placeimg.com/640/480/cats',
+  //     'http://placeimg.com/640/480/transport',
+  //     'http://placeimg.com/640/480/nature',
+  //     'http://placeimg.com/640/480/people'
+  //   ],
+  // );
 
-  void goToShoppingCartPage(BuildContext context, List<ProductModel> products) {
+  Future<void> _showProductAddedDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Item added successfully'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('A new item has been added to your shopping cart.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Continue shopping'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Go to Shopping cart'),
+              onPressed: () {
+                goToShoppingCartPage(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void goToShoppingCartPage(BuildContext context) {
     Navigator.pushNamed(context, "/shoppingcart");
   }
 
@@ -43,7 +77,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     // }
     final cart = context.watch<CartModel>();
 
-    // product = ModalRoute.of(context)!.settings.arguments as ProductModel;
+    product = ModalRoute.of(context)!.settings.arguments as ProductModel;
 
     return Scaffold(
       appBar: const PreferredSize(
@@ -191,7 +225,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           child: ElevatedButton(
             onPressed: () {
               cart.add(product);
-              goToShoppingCartPage(context, cart.getProducts());
+              _showProductAddedDialog();
             },
             child: Text('Add to cart', style: TextStyles.bigText),
           ),
