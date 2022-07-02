@@ -45,20 +45,17 @@ class _OrdersPageState extends State<OrdersPage> {
   }
 
   Widget _buildHeader() {
-    return Card(
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "My Orders",
-              style: TextStyles.title,
-            ),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "My Orders",
+            style: TextStyles.title,
+          ),
+        ],
       ),
     );
   }
@@ -196,32 +193,35 @@ class _OrdersPageState extends State<OrdersPage> {
           children: [
             Expanded(
               flex: 2,
-              child: Column(
-                children: [
-                  _buildHeader(),
-                  FutureBuilder<List<Order>>(
-                    future: getOrders(),
-                    builder: (
-                      BuildContext context,
-                      AsyncSnapshot<List<Order>> snapshot,
-                    ) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
-                        } else if (snapshot.hasData) {
-                          return _buildList(snapshot.data!);
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildHeader(),
+                    FutureBuilder<List<Order>>(
+                      future: getOrders(),
+                      builder: (
+                        BuildContext context,
+                        AsyncSnapshot<List<Order>> snapshot,
+                      ) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          if (snapshot.hasError) {
+                            return Text(snapshot.error.toString());
+                          } else if (snapshot.hasData) {
+                            return _buildList(snapshot.data!);
+                          } else {
+                            return const Text('Empty data');
+                          }
                         } else {
-                          return const Text('Empty data');
+                          return Text('State: ${snapshot.connectionState}');
                         }
-                      } else {
-                        return Text('State: ${snapshot.connectionState}');
-                      }
-                    },
-                  )
-                ],
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
             _buildOrderInfo(),

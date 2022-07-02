@@ -5,6 +5,7 @@ import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/themes/app_text_styles.dart';
 import 'package:store/shared/utils/format_currency.dart';
+import 'package:store/shared/widget/page_wrapper/page_wrapper.dart';
 import 'package:store/shared/widget/shopping_cart_product_list/shopping_cart_product_list.dart';
 
 class ShoppingCartPage extends StatefulWidget {
@@ -39,20 +40,17 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   }
 
   Widget _buildHeader(cartProductCount) {
-    return Card(
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(30),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Shopping Card ($cartProductCount)",
-              style: TextStyles.title,
-            ),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Shopping Card ($cartProductCount)",
+            style: TextStyles.title,
+          ),
+        ],
       ),
     );
   }
@@ -122,25 +120,29 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         preferredSize: Size.fromHeight(50),
         child: Header(),
       ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 4,
-            child: Column(
-              children: [
-                _buildHeader(cartProductCount),
-                ShoppingCartProductList(
-                  productList: cart.getProducts(),
-                  notifyParent: refresh,
-                  onCardTap: (context, b) {},
+      body: PageWrapper(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 4,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildHeader(cartProductCount),
+                    ShoppingCartProductList(
+                      productList: cart.getProducts(),
+                      notifyParent: refresh,
+                      onCardTap: (context, b) {},
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-          _buildTotalSummary(cart),
-        ],
+            _buildTotalSummary(cart),
+          ],
+        ),
       ),
     );
   }

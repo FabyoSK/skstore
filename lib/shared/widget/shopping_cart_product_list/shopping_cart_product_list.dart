@@ -26,6 +26,7 @@ class _ShoppingCartProductListState extends State<ShoppingCartProductList> {
     final cart = context.watch<CartModel>();
     return ListView.builder(
       shrinkWrap: true,
+      scrollDirection: Axis.vertical,
       itemCount: widget.productList.length,
       itemBuilder: (BuildContext context, int index) {
         ProductModel product = widget.productList[index];
