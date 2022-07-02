@@ -29,14 +29,19 @@ class ShoppingCartProductCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // Container(
-                  //   child: Image.network(
-                  //     product.image,
-                  //     fit: BoxFit.cover,
-                  //   ),
-                  //   height: 150,
-                  //   width: 300,
-                  // ),
+                  Container(
+                    child: product.image != null
+                        ? Image.network(
+                            product.image!,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            product.gallery!.first!,
+                            fit: BoxFit.cover,
+                          ),
+                    height: 200,
+                    width: 300,
+                  ),
                   SizedBox(
                     height: 8.0,
                   ),

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:store/shared/header/header.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
+import 'package:store/shared/themes/app_text_styles.dart';
 import 'package:store/shared/utils/format_currency.dart';
 import 'package:store/shared/widget/shopping_cart_product_list/shopping_cart_product_list.dart';
 
@@ -37,7 +38,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     });
   }
 
-  Widget header(cartProductCount) {
+  Widget _buildHeader(cartProductCount) {
     return Card(
       elevation: 0,
       child: Padding(
@@ -46,14 +47,17 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Shopping Card ($cartProductCount)"),
+            Text(
+              "Shopping Card ($cartProductCount)",
+              style: TextStyles.title,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget total(CartModel cart) {
+  Widget _buildTotalSummary(CartModel cart) {
     calculateTotal(cart.getProducts());
     return Expanded(
       flex: 2,
@@ -65,13 +69,22 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: Text("Total"),
+                child: Text(
+                  "Total",
+                  style: TextStyles.title,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("total"),
-                  Text(totalSum),
+                  Text(
+                    "Total",
+                    style: TextStyles.text,
+                  ),
+                  Text(
+                    totalSum,
+                    style: TextStyles.text,
+                  ),
                 ],
               ),
               Padding(
@@ -94,16 +107,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     );
   }
 
-  refresh() {
+  void refresh() {
     setState(() {});
-  }
-
-  Widget renderList(CartModel cart) {
-    return ShoppingCartProductList(
-      productList: cart.getProducts(),
-      notifyParent: refresh,
-      onCardTap: (context, b) {},
-    );
   }
 
   @override
@@ -124,12 +129,16 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             flex: 4,
             child: Column(
               children: [
-                header(cartProductCount),
-                renderList(cart),
+                _buildHeader(cartProductCount),
+                ShoppingCartProductList(
+                  productList: cart.getProducts(),
+                  notifyParent: refresh,
+                  onCardTap: (context, b) {},
+                ),
               ],
             ),
           ),
-          total(cart),
+          _buildTotalSummary(cart),
         ],
       ),
     );

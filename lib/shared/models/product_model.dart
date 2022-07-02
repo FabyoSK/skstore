@@ -8,30 +8,34 @@ class ProductModel {
   String? image;
   List<dynamic>? gallery;
   String price;
+  String? discount;
   String? department;
   String material;
   int quantity = 1;
 
-  ProductModel(
-      {required this.id,
-      required this.name,
-      required this.description,
-      this.category,
-      this.image,
-      required this.price,
-      this.department,
-      required this.material,
-      this.gallery});
+  ProductModel({
+    required this.id,
+    required this.name,
+    required this.description,
+    this.category,
+    this.image,
+    required this.price,
+    this.department,
+    required this.material,
+    this.gallery,
+    this.discount,
+  });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json['id'],
         name: json['name'],
         description: json['description'],
-        // category: json['category'],
+        category: json['category'],
         image: json['image'],
         gallery: json['gallery'],
         price: json['price'],
-        // department: json['department'],
+        discount: json['discount'],
+        department: json['department'],
         material: json['material'],
       );
 

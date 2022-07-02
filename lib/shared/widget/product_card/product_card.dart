@@ -13,36 +13,13 @@ class ProductCard extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
-  Widget sliderPlugin(images) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: 200,
-        autoPlayInterval: Duration(seconds: 4),
-        autoPlay: true,
-      ),
-      items: images.map<Widget>(
-        (i) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Container(
-                height: 200,
-                width: 300,
-                child: Image.network(i, fit: BoxFit.cover),
-              );
-            },
-          );
-        },
-      ).toList(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Card(
         elevation: 1,
-        child: Container(
+        child: SizedBox(
           width: 300,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -54,7 +31,10 @@ class ProductCard extends StatelessWidget {
                         product.image!,
                         fit: BoxFit.cover,
                       )
-                    : sliderPlugin(product.gallery),
+                    : Image.network(
+                        product.gallery!.first!,
+                        fit: BoxFit.cover,
+                      ),
                 height: 200,
                 width: 300,
               ),
