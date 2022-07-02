@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:store/modules/checkout/checkout_controller.dart';
-import 'package:store/shared/widget/header/header.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:provider/provider.dart';
@@ -26,11 +25,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
         padding: const EdgeInsets.all(30),
         child: Column(
           children: [
-            Text("Review your order"),
+            const Text("Review your order"),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: const [
                 Text("Total"),
                 Text("100\$"),
               ],
@@ -48,40 +47,34 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     final cart = context.watch<CartModel>();
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: Header(),
-      ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Column(
-              children: [
-                orderSummary(),
-                // CheckoutSteps(),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          await controller.checkout(products, cart, () {
-                            goToThankYouPage(context);
-                          });
-                        },
-                        child: const Text('Confirm and Checkout'),
-                      ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Column(
+            children: [
+              orderSummary(),
+              // CheckoutSteps(),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await controller.checkout(products, cart, () {
+                          goToThankYouPage(context);
+                        });
+                      },
+                      child: const Text('Confirm and Checkout'),
                     ),
-                  ],
-                )
-              ],
-            ),
+                  ),
+                ],
+              )
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

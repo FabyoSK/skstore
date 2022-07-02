@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:store/shared/widget/header/header.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/themes/app_text_styles.dart';
@@ -94,7 +93,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                           onPressed: () {
                             goToCheckoutPage(context, cart.getProducts());
                           },
-                          child: Text('Checkout')),
+                          child: const Text('Checkout')),
                     ],
                   ),
                 ),
@@ -115,34 +114,28 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     final cart = context.watch<CartModel>();
     var cartProductCount = cart.getProducts().length;
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: Header(),
-      ),
-      body: PageWrapper(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 4,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _buildHeader(cartProductCount),
-                    ShoppingCartProductList(
-                      productList: cart.getProducts(),
-                      notifyParent: refresh,
-                      onCardTap: (context, b) {},
-                    ),
-                  ],
-                ),
+    return PageWrapper(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 4,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildHeader(cartProductCount),
+                  ShoppingCartProductList(
+                    productList: cart.getProducts(),
+                    notifyParent: refresh,
+                    onCardTap: (context, b) {},
+                  ),
+                ],
               ),
             ),
-            _buildTotalSummary(cart),
-          ],
-        ),
+          ),
+          _buildTotalSummary(cart),
+        ],
       ),
     );
   }

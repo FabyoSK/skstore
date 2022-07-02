@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:store/app_wrapper.dart';
 import 'package:store/modules/cart/shopping_cart_page.dart';
 import 'package:store/modules/checkout/checkout_page.dart';
 import 'package:store/modules/home/home_page.dart';
@@ -24,15 +25,24 @@ class AppWidget extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: "/home",
+        builder: (context, child) {
+          return Overlay(
+            initialEntries: [
+              OverlayEntry(
+                builder: (context) => AppWrapper(child: child!),
+              ),
+            ],
+          );
+        },
         routes: {
-          "/home": (context) => HomePage(),
-          "/login": (context) => LoginPage(),
-          "/register": (context) => RegisterPage(),
-          "/product_detail": (context) => ProductDetailPage(),
-          "/shoppingcart": (context) => ShoppingCartPage(),
-          "/checkout": (context) => CheckoutPage(),
-          "/orders": (context) => OrdersPage(),
-          "/thank_you": (context) => ThankYouPage(),
+          "/home": (context) => const HomePage(),
+          "/login": (context) => const LoginPage(),
+          "/register": (context) => const RegisterPage(),
+          "/product_detail": (context) => const ProductDetailPage(),
+          "/shoppingcart": (context) => const ShoppingCartPage(),
+          "/checkout": (context) => const CheckoutPage(),
+          "/orders": (context) => const OrdersPage(),
+          "/thank_you": (context) => const ThankYouPage(),
         },
       ),
     );

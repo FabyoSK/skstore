@@ -19,7 +19,7 @@ class _CheckoutStepsState extends State<CheckoutSteps> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [],
+              children: const [],
             )))
       ];
 
@@ -35,7 +35,7 @@ class _CheckoutStepsState extends State<CheckoutSteps> {
             _activeStepIndex += 1;
           });
         } else {
-          print('Submited');
+          print('Submitted');
         }
       },
       onStepCancel: () {

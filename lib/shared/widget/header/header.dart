@@ -36,7 +36,7 @@ class _HeaderState extends State<Header> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InkWell(onTap: () => goToHomePage(context), child: Text("SK Shop")),
+          InkWell(onTap: () => goToHomePage(context), child: const Text("SK Shop")),
           SizedBox(
             width: 400,
             child: TextFormField(

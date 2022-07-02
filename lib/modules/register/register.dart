@@ -19,13 +19,13 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: 600,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('Register'),
+              const Text('Register'),
               TextFormField(
                 decoration: const InputDecoration(
                   hintText: 'Enter your name',

@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:store/shared/widget/header/header.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/themes/app_text_styles.dart';
@@ -16,20 +15,6 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   late ProductModel product;
-  //ProductModel(
-  //   id: "id",
-  //   name: "Handcrafted Rubber Towels",
-  //   description:
-  //       "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
-  //   price: "00",
-  //   material: "jj",
-  //   gallery: [
-  //     'http://placeimg.com/640/480/cats',
-  //     'http://placeimg.com/640/480/transport',
-  //     'http://placeimg.com/640/480/nature',
-  //     'http://placeimg.com/640/480/people'
-  //   ],
-  // );
 
   Future<void> _showProductAddedDialog() async {
     return showDialog<void>(
@@ -70,28 +55,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    // if (ModalRoute.of(context)!.settings.arguments == null) {
-    //   Navigator.pushNamed(context, "/home");
-
-    //   return Text('404');
-    // }
     final cart = context.watch<CartModel>();
 
     product = ModalRoute.of(context)!.settings.arguments as ProductModel;
 
-    return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: Header(),
-      ),
-      body: SingleChildScrollView(
-          child: _buildProductDetailsSection(context, cart)),
-    );
+    return SingleChildScrollView(
+        child: _buildProductDetailsSection(context, cart));
   }
 
   _buildProductDetailsSection(BuildContext context, CartModel cart) {
-    Size screenSize = MediaQuery.of(context).size;
-
     return PageWrapper(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,15 +85,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   _buildProductTitleWidget(),
-                  SizedBox(
+                  const SizedBox(
                     height: 8.0,
                   ),
                   _buildProductDescription(),
-                  SizedBox(
+                  const SizedBox(
                     height: 8.0,
                   ),
                   _buildPriceWidget(),
-                  SizedBox(
+                  const SizedBox(
                     height: 8.0,
                   ),
                   _buildAddToCartButton(context, cart)
@@ -135,7 +107,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget _buildProductImageWidget() {
-    return Container(
+    return SizedBox(
       height: 500,
       child: product.image != null
           ? Image.network(
@@ -150,16 +122,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return CarouselSlider(
       options: CarouselOptions(
         height: 500,
-        autoPlayInterval: Duration(seconds: 4),
+        autoPlayInterval: const Duration(seconds: 4),
         autoPlay: true,
       ),
       items: images.map<Widget>(
         (i) {
           return Builder(
             builder: (BuildContext context) {
-              return Container(
-                child: Image.network(i, fit: BoxFit.cover),
-              );
+              return Image.network(i, fit: BoxFit.cover);
             },
           );
         },
@@ -186,7 +156,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               "\$${product.price}",
               style: TextStyles.bigTextBold,
             ),
-            SizedBox(
+            const SizedBox(
               width: 8.0,
             ),
             Text(

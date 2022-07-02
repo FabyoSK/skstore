@@ -21,7 +21,6 @@ class Order {
 
   static List<Order> allOrdersFromJson(var str) {
     final jsonData = json.decode(str);
-    print(jsonData);
     return List<Order>.from(jsonData.map((x) => Order.fromJson(x)));
   }
 

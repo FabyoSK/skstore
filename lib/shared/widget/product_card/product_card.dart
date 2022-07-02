@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/utils/format_currency.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
@@ -25,7 +24,9 @@ class ProductCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
+              SizedBox(
+                height: 200,
+                width: 300,
                 child: product.image != null
                     ? Image.network(
                         product.image!,
@@ -35,10 +36,8 @@ class ProductCard extends StatelessWidget {
                         product.gallery!.first!,
                         fit: BoxFit.cover,
                       ),
-                height: 200,
-                width: 300,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               Padding(
@@ -51,9 +50,9 @@ class ProductCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       product.name,
-                      style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                      style: const TextStyle(fontSize: 16.0, color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2.0,
                     ),
                     Row(
@@ -62,12 +61,12 @@ class ProductCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           FormatCurrency.format(double.parse(product.price)),
-                          style: TextStyle(fontSize: 16.0, color: Colors.black),
+                          style: const TextStyle(fontSize: 16.0, color: Colors.black),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8.0,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8.0,
                         ),
                         // Text(
@@ -76,7 +75,7 @@ class ProductCard extends StatelessWidget {
                         // ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8.0,
                     ),
                   ],

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:store/shared/widget/header/header.dart';
 import 'package:store/shared/api/api_endpoint.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/widget/product_list/product_list.dart';
@@ -34,44 +33,37 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: Header(),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              // width: 1000,
-              alignment: Alignment.center,
-              child: FutureBuilder<List<ProductModel>>(
-                future: getProducts(),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<List<ProductModel>> snapshot,
-                ) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      return Text(snapshot.error.toString());
-                    } else if (snapshot.hasData) {
-                      return ProductList(
-                        productList: snapshot.data!,
-                        onCardTap: goToProductDetailPage,
-                      );
-                    } else {
-                      return const Text('Empty data');
-                    }
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            child: FutureBuilder<List<ProductModel>>(
+              future: getProducts(),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<List<ProductModel>> snapshot,
+              ) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  } else if (snapshot.hasData) {
+                    return ProductList(
+                      productList: snapshot.data!,
+                      onCardTap: goToProductDetailPage,
+                    );
                   } else {
-                    return Text('State: ${snapshot.connectionState}');
+                    return const Text('Empty data');
                   }
-                },
-              ),
+                } else {
+                  return Text('State: ${snapshot.connectionState}');
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

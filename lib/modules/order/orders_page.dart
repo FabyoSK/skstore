@@ -68,7 +68,7 @@ class _OrdersPageState extends State<OrdersPage> {
         child: Padding(
           padding: const EdgeInsets.all(30),
           child: currentOrder == null
-              ? Center(
+              ? const Center(
                   child:
                       Text("Please select an order to view more information."),
                 )
@@ -91,20 +91,20 @@ class _OrdersPageState extends State<OrdersPage> {
                         String formattedTotal = FormatCurrency.format(total);
 
                         return Container(
-                          margin: EdgeInsets.symmetric(vertical: 4),
+                          margin: const EdgeInsets.symmetric(vertical: 4),
                           child: Card(
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Row(
                                 children: [
-                                  Container(
+                                  SizedBox(
+                                    width: 100,
                                     child: Image.network(
                                       product.imageUrl,
                                       fit: BoxFit.cover,
                                     ),
-                                    width: 100,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 8,
                                   ),
                                   Column(
@@ -152,7 +152,7 @@ class _OrdersPageState extends State<OrdersPage> {
             });
           },
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 4),
+            margin: const EdgeInsets.symmetric(vertical: 4),
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(12.0),

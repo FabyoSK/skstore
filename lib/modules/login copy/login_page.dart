@@ -9,8 +9,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String email = 'fabio.alves@chuva.io';
-  String password = 'password';
+  String name = '';
+  String email = '';
+  String password = '';
 
   final authController = AuthController();
 
@@ -25,6 +26,17 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text('Login'),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter your name',
+                  labelText: 'Name',
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    name = value;
+                  });
+                },
+              ),
               TextFormField(
                 decoration: const InputDecoration(
                   hintText: 'Enter your email',
@@ -51,12 +63,13 @@ class _LoginPageState extends State<LoginPage> {
               TextButton(
                 child: const Text('Login'),
                 onPressed: () async {
-                  await authController.login(email, password);
-                  // .then((r) => {Navigator.pushNamed(context, "/")})
-                  // .catchError((error) => {
-                  //       // handle Error
-                  //       print(error)
-                  //     });
+                  authController
+                      .login(email, password)
+                      .then((r) => {Navigator.pushNamed(context, "/")})
+                      .catchError((error) => {
+                            // handle Error
+                            print(error)
+                          });
                 },
               )
             ],

@@ -29,7 +29,9 @@ class ShoppingCartProductCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
+                  SizedBox(
+                    height: 200,
+                    width: 300,
                     child: product.image != null
                         ? Image.network(
                             product.image!,
@@ -39,10 +41,8 @@ class ShoppingCartProductCard extends StatelessWidget {
                             product.gallery!.first!,
                             fit: BoxFit.cover,
                           ),
-                    height: 200,
-                    width: 300,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8.0,
                   ),
                   Padding(
@@ -55,9 +55,9 @@ class ShoppingCartProductCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           product.name,
-                          style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                          style: const TextStyle(fontSize: 16.0, color: Colors.grey),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 2.0,
                         ),
                         Row(
@@ -66,10 +66,10 @@ class ShoppingCartProductCard extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               "\$${product.price}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16.0, color: Colors.black),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8.0,
                             ),
 
@@ -79,7 +79,7 @@ class ShoppingCartProductCard extends StatelessWidget {
                             // ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8.0,
                         ),
                       ],
@@ -92,12 +92,12 @@ class ShoppingCartProductCard extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: onCartRemoveButtonTap,
-                    icon: Icon(Icons.remove),
+                    icon: const Icon(Icons.remove),
                   ),
                   Text(product.quantity.toString()),
                   IconButton(
                     onPressed: onCartAddButtonTap,
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                   )
                 ],
               ),
