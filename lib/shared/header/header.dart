@@ -27,7 +27,7 @@ class _HeaderState extends State<Header> {
     var cartProductCount = cart.getProducts().length;
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,12 +52,50 @@ class _HeaderState extends State<Header> {
               },
             ),
           ),
-          Badge(
-            badgeContent: Text(cartProductCount.toString()),
-            child: InkWell(
-                onTap: () => goToShoppingCartPage(context),
-                child: Icon(Icons.shopping_cart_checkout)),
-          )
+          Row(
+            children: [
+              Badge(
+                badgeContent: Text(cartProductCount.toString()),
+                child: InkWell(
+                    onTap: () => goToShoppingCartPage(context),
+                    child: const Icon(Icons.shopping_cart_checkout)),
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              PopupMenuButton(
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 1,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.shopping_bag_outlined),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("My Orders")
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 2,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.logout),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Logout")
+                      ],
+                    ),
+                  ),
+                ],
+                offset: const Offset(0, 30),
+                elevation: 2,
+                child: const Icon(Icons.account_circle),
+              ),
+            ],
+          ),
         ],
       ),
     );

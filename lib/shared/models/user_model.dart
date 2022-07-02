@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class UserModel {
   final String name;
   final String email;
@@ -30,4 +32,9 @@ class UserModel {
       };
 
   String toJson() => jsonEncode(toMap());
+
+  static Future<String> getAccessToken() async {
+    final instance = await SharedPreferences.getInstance();
+    return instance.getString("accessToken") ?? "";
+  }
 }

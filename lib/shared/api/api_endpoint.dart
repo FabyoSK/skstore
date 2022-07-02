@@ -5,6 +5,8 @@ class ApiEndpoint {
 
   static final get_products = '/products/';
 
+  static final checkout = '/checkout';
+
   static String resolve_endpoint(String path) {
     return api_url + path;
   }

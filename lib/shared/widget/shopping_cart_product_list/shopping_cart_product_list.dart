@@ -24,38 +24,36 @@ class _ShoppingCartProductListState extends State<ShoppingCartProductList> {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.productList.length,
-        itemBuilder: (BuildContext context, int index) {
-          ProductModel product = widget.productList[index];
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: widget.productList.length,
+      itemBuilder: (BuildContext context, int index) {
+        ProductModel product = widget.productList[index];
 
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ShoppingCartProductCard(
-              key: ValueKey(product.id),
-              product: product,
-              onTap: () {
-                widget.onCardTap(context, product);
-              },
-              onCartButtonTap: () {
-                cart.add(product);
-              },
-              onCartAddButtonTap: () {
-                cart.setQuantity(index, product.quantity + 1);
-                setState(() {});
-                widget.notifyParent();
-              },
-              onCartRemoveButtonTap: () {
-                cart.setQuantity(index, product.quantity - 1);
-                setState(() {});
-                widget.notifyParent();
-              },
-            ),
-          );
-        },
-      ),
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ShoppingCartProductCard(
+            key: ValueKey(product.id),
+            product: product,
+            onTap: () {
+              widget.onCardTap(context, product);
+            },
+            onCartButtonTap: () {
+              cart.add(product);
+            },
+            onCartAddButtonTap: () {
+              cart.setQuantity(index, product.quantity + 1);
+              setState(() {});
+              widget.notifyParent();
+            },
+            onCartRemoveButtonTap: () {
+              cart.setQuantity(index, product.quantity - 1);
+              setState(() {});
+              widget.notifyParent();
+            },
+          ),
+        );
+      },
     );
   }
 }

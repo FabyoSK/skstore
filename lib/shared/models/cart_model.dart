@@ -10,12 +10,15 @@ class CartModel extends ChangeNotifier {
   List<ProductModel> getProducts() => _products;
 
   CartModel() {
-    bootstrapInitialProducts();
+    // bootstrapInitialProducts();
   }
 
   void bootstrapInitialProducts() async {
     final instance = await SharedPreferences.getInstance();
     final spProducts = instance.getString("cart");
+
+    if (spProducts!.isEmpty) return;
+
     final products = ProductModel.allProductFromJson(spProducts);
 
     if (products.isNotEmpty) {
@@ -38,6 +41,12 @@ class CartModel extends ChangeNotifier {
   void remove(ProductModel item) async {
     _products.remove(item);
 
+    await saveToSharedPreferences();
+    notifyListeners();
+  }
+
+  void reset() async {
+    _products.clear();
     await saveToSharedPreferences();
     notifyListeners();
   }

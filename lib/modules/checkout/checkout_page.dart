@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:store/modules/checkout/checkout_controller.dart';
 import 'package:store/shared/header/header.dart';
-import 'package:store/shared/widget/checkout_steps/checkout_steps.dart';
+import 'package:store/shared/models/cart_model.dart';
+import 'package:store/shared/models/product_model.dart';
+import 'package:provider/provider.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({Key? key}) : super(key: key);
@@ -10,6 +13,12 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  final controller = CheckoutController();
+
+  void goToThankYouPage(BuildContext context) {
+    Navigator.pushNamed(context, "/thank_you");
+  }
+
   Widget orderSummary() {
     return Card(
       elevation: 2.0,
@@ -34,6 +43,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    final products =
+        ModalRoute.of(context)!.settings.arguments as List<ProductModel>;
+
+    final cart = context.watch<CartModel>();
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
@@ -53,7 +67,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await controller.checkout(products, cart, () {
+                            goToThankYouPage(context);
+                          });
+                        },
                         child: const Text('Confirm and Checkout'),
                       ),
                     ),
