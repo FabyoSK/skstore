@@ -10,7 +10,7 @@ class CartModel extends ChangeNotifier {
   List<ProductModel> getProducts() => _products;
 
   CartModel() {
-    bootstrapInitialProducts();
+    // bootstrapInitialProducts();
   }
 
   void bootstrapInitialProducts() async {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store/shared/api/api_endpoint.dart';
@@ -60,5 +61,26 @@ class AuthController {
       final errorResponse = jsonDecode(response.body.toString());
       return Future.error(errorResponse["error"]);
     }
+  }
+
+  Future<UserModel?> getUserInfo() async {
+    final url =
+        Uri.parse(ApiEndpoint.resolve_endpoint(ApiEndpoint.get_user_info));
+
+    String accessToken = await UserModel.getAccessToken();
+
+    final response = await http.get(
+      url,
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $accessToken"
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return UserModel.fromJson(response.body.toString());
+    }
+
+    return null;
   }
 }

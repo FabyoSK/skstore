@@ -1,7 +1,9 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:store/restart_widget.dart';
 import 'package:store/shared/models/cart_model.dart';
+import 'package:store/shared/models/user_model.dart';
 
 class Header extends StatefulWidget {
   const Header({Key? key}) : super(key: key);
@@ -25,10 +27,15 @@ class _HeaderState extends State<Header> {
     Navigator.pushNamed(context, "/orders");
   }
 
+  void goToLoginPage(BuildContext context) {
+    Navigator.pushNamed(context, "/login");
+  }
+
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
-    var cartProductCount = cart.getProducts().length;
+    var user = context.watch<UserModel?>();
+    int cartProductCount = cart.getProducts().length;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -36,7 +43,8 @@ class _HeaderState extends State<Header> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InkWell(onTap: () => goToHomePage(context), child: const Text("SK Shop")),
+          InkWell(
+              onTap: () => goToHomePage(context), child: const Text("SK Shop")),
           SizedBox(
             width: 400,
             child: TextFormField(
@@ -65,42 +73,70 @@ class _HeaderState extends State<Header> {
                     child: const Icon(Icons.shopping_cart_checkout)),
               ),
               const SizedBox(
-                width: 12,
+                width: 16,
               ),
-              PopupMenuButton(
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 1,
-                    child: InkWell(
-                      onTap: () => goToMyOrdersPage(context),
-                      child: Row(
-                        children: const [
-                          Icon(Icons.shopping_bag_outlined),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("My Orders")
-                        ],
+              if (user != null)
+                PopupMenuButton(
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 1,
+                      child: InkWell(
+                        onTap: () => goToMyOrdersPage(context),
+                        child: Row(
+                          children: const [
+                            Icon(Icons.shopping_bag_outlined),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text("My Orders")
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  PopupMenuItem(
-                    value: 2,
-                    child: Row(
-                      children: const [
-                        Icon(Icons.logout),
-                        SizedBox(
-                          width: 10,
+                    PopupMenuItem(
+                      value: 2,
+                      child: InkWell(
+                        onTap: () {
+                          user?.clear();
+                          goToHomePage(context);
+                          user = null;
+                          RestartWidget.restartApp(context);
+                        },
+                        child: Row(
+                          children: const [
+                            Icon(Icons.logout),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text("Logout")
+                          ],
                         ),
-                        Text("Logout")
-                      ],
+                      ),
                     ),
+                  ],
+                  offset: const Offset(0, 30),
+                  elevation: 2,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.account_circle),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(user!.email)
+                    ],
                   ),
-                ],
-                offset: const Offset(0, 30),
-                elevation: 2,
-                child: const Icon(Icons.account_circle),
-              ),
+                )
+              else
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        goToLoginPage(context);
+                      },
+                      child: const Text('Login'),
+                    ),
+                  ],
+                ),
             ],
           ),
         ],

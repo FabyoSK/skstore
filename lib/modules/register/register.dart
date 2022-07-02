@@ -60,16 +60,27 @@ class _RegisterPageState extends State<RegisterPage> {
                   });
                 },
               ),
-              TextButton(
-                child: const Text('Login'),
+              SizedBox(
+                height: 16,
+              ),
+              ElevatedButton(
+                child: Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Submit'),
+                    ],
+                  ),
+                ),
                 onPressed: () async {
                   await authController
                       .register(name, email, password)
-                      .then((r) => {Navigator.pushNamed(context, "/home")});
-                  // .catchError((error) => {
-                  //       // handle Error
-                  //       print(error)
-                  //     });
+                      .then((r) => {Navigator.pushNamed(context, "/home")})
+                      .catchError((error) => {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(error),
+                            ))
+                          });
                 },
               )
             ],

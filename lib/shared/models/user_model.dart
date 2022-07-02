@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserModel {
+class UserModel extends ChangeNotifier {
   final String name;
   final String email;
   final String accessToken;
@@ -36,5 +37,11 @@ class UserModel {
   static Future<String> getAccessToken() async {
     final instance = await SharedPreferences.getInstance();
     return instance.getString("accessToken") ?? "";
+  }
+
+  void clear() async {
+    final instance = await SharedPreferences.getInstance();
+    instance.clear();
+    notifyListeners();
   }
 }

@@ -1,6 +1,7 @@
 class ApiEndpoint {
   static const api_url = 'http://localhost:3333';
   static const create_user = '/users';
+  static const get_user_info = '/me';
   static const create_session = '/sessions';
 
   static const get_products = '/products/';

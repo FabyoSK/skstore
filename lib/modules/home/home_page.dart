@@ -33,37 +33,39 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            child: FutureBuilder<List<ProductModel>>(
-              future: getProducts(),
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<List<ProductModel>> snapshot,
-              ) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  } else if (snapshot.hasData) {
-                    return ProductList(
-                      productList: snapshot.data!,
-                      onCardTap: goToProductDetailPage,
-                    );
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              child: FutureBuilder<List<ProductModel>>(
+                future: getProducts(),
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<List<ProductModel>> snapshot,
+                ) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else if (snapshot.hasData) {
+                      return ProductList(
+                        productList: snapshot.data!,
+                        onCardTap: goToProductDetailPage,
+                      );
+                    } else {
+                      return const Text('Empty data');
+                    }
                   } else {
-                    return const Text('Empty data');
+                    return Text('State: ${snapshot.connectionState}');
                   }
-                } else {
-                  return Text('State: ${snapshot.connectionState}');
-                }
-              },
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

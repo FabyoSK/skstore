@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:store/shared/api/api_endpoint.dart';
 import 'package:store/shared/models/order_model.dart';
 import 'package:store/shared/utils/format_currency.dart';
-import 'package:store/shared/widget/header/header.dart';
 import 'package:store/shared/themes/app_text_styles.dart';
 import 'package:http/http.dart' as http;
 import 'package:store/shared/widget/page_wrapper/page_wrapper.dart';
@@ -181,52 +180,45 @@ class _OrdersPageState extends State<OrdersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: Header(),
-      ),
-      body: PageWrapper(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 2,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _buildHeader(),
-                    FutureBuilder<List<Order>>(
-                      future: getOrders(),
-                      builder: (
-                        BuildContext context,
-                        AsyncSnapshot<List<Order>> snapshot,
-                      ) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.done) {
-                          if (snapshot.hasError) {
-                            return Text(snapshot.error.toString());
-                          } else if (snapshot.hasData) {
-                            return _buildList(snapshot.data!);
-                          } else {
-                            return const Text('Empty data');
-                          }
+    return PageWrapper(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 2,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildHeader(),
+                  FutureBuilder<List<Order>>(
+                    future: getOrders(),
+                    builder: (
+                      BuildContext context,
+                      AsyncSnapshot<List<Order>> snapshot,
+                    ) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else if (snapshot.hasData) {
+                          return _buildList(snapshot.data!);
                         } else {
-                          return Text('State: ${snapshot.connectionState}');
+                          return const Text('Empty data');
                         }
-                      },
-                    )
-                  ],
-                ),
+                      } else {
+                        return Text('State: ${snapshot.connectionState}');
+                      }
+                    },
+                  )
+                ],
               ),
             ),
-            _buildOrderInfo(),
-          ],
-        ),
+          ),
+          _buildOrderInfo(),
+        ],
       ),
     );
   }

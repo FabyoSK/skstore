@@ -9,15 +9,29 @@ import 'package:store/modules/order/orders_page.dart';
 import 'package:store/modules/product_detail/product_detail_page.dart';
 import 'package:store/modules/register/register.dart';
 import 'package:store/modules/thank_you/thank_you.dart';
+import 'package:store/shared/auth/auth_controller.dart';
 import 'package:store/shared/models/cart_model.dart';
+import 'package:store/shared/models/user_model.dart';
 
 class AppWidget extends StatelessWidget {
-  const AppWidget({Key? key}) : super(key: key);
+  AppWidget({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CartModel(),
+  AuthController authController = AuthController();
+
+  Widget _appWidget(UserModel? user) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CartModel(),
+        ),
+        user != null
+            ? ChangeNotifierProvider<UserModel?>(
+                create: (context) => user,
+              )
+            : ChangeNotifierProvider<UserModel?>(
+                create: (context) => null,
+              )
+      ],
       child: MaterialApp(
         title: 'Store',
         theme: ThemeData(
@@ -25,26 +39,56 @@ class AppWidget extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: "/home",
-        builder: (context, child) {
-          return Overlay(
-            initialEntries: [
-              OverlayEntry(
-                builder: (context) => AppWrapper(child: child!),
-              ),
-            ],
-          );
-        },
         routes: {
-          "/home": (context) => const HomePage(),
-          "/login": (context) => const LoginPage(),
-          "/register": (context) => const RegisterPage(),
-          "/product_detail": (context) => const ProductDetailPage(),
-          "/shoppingcart": (context) => const ShoppingCartPage(),
-          "/checkout": (context) => const CheckoutPage(),
-          "/orders": (context) => const OrdersPage(),
-          "/thank_you": (context) => const ThankYouPage(),
+          "/home": (context) => const AppWrapper(
+                child: HomePage(),
+              ),
+          "/login": (context) => const AppWrapper(
+                child: LoginPage(),
+              ),
+          "/register": (context) => const AppWrapper(
+                child: RegisterPage(),
+              ),
+          "/product_detail": (context) => const AppWrapper(
+                child: ProductDetailPage(),
+              ),
+          "/shoppingcart": (context) => const AppWrapper(
+                child: ShoppingCartPage(),
+              ),
+          "/checkout": (context) => const AppWrapper(
+                child: CheckoutPage(),
+              ),
+          "/orders": (context) => const AppWrapper(
+                child: OrdersPage(),
+              ),
+          "/thank_you": (context) => const AppWrapper(
+                child: ThankYouPage(),
+              ),
         },
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<UserModel?>(
+      future: authController.getUserInfo(),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<UserModel?> snapshot,
+      ) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            return _appWidget(snapshot.data!);
+          } else {
+            return _appWidget(null);
+          }
+        } else {
+          return Text('State: ${snapshot.connectionState}');
+        }
+      },
     );
   }
 }
