@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:store/shared/header/header.dart';
+import 'package:store/shared/widget/header/header.dart';
 import 'package:store/shared/themes/app_text_styles.dart';
 
 class ThankYouPage extends StatelessWidget {

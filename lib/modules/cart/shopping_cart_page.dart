@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:store/shared/header/header.dart';
+import 'package:store/shared/widget/header/header.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/themes/app_text_styles.dart';

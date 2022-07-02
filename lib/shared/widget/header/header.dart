@@ -21,6 +21,10 @@ class _HeaderState extends State<Header> {
     Navigator.pushNamed(context, "/shoppingcart");
   }
 
+  void goToMyOrdersPage(BuildContext context) {
+    Navigator.pushNamed(context, "/orders");
+  }
+
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
@@ -67,14 +71,17 @@ class _HeaderState extends State<Header> {
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     value: 1,
-                    child: Row(
-                      children: const [
-                        Icon(Icons.shopping_bag_outlined),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("My Orders")
-                      ],
+                    child: InkWell(
+                      onTap: () => goToMyOrdersPage(context),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.shopping_bag_outlined),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("My Orders")
+                        ],
+                      ),
                     ),
                   ),
                   PopupMenuItem(

@@ -4,6 +4,7 @@ import 'package:store/modules/cart/shopping_cart_page.dart';
 import 'package:store/modules/checkout/checkout_page.dart';
 import 'package:store/modules/home/home_page.dart';
 import 'package:store/modules/login/login_page.dart';
+import 'package:store/modules/order/orders_page.dart';
 import 'package:store/modules/product_detail/product_detail_page.dart';
 import 'package:store/modules/register/register.dart';
 import 'package:store/modules/thank_you/thank_you.dart';
@@ -30,6 +31,7 @@ class AppWidget extends StatelessWidget {
           "/product_detail": (context) => ProductDetailPage(),
           "/shoppingcart": (context) => ShoppingCartPage(),
           "/checkout": (context) => CheckoutPage(),
+          "/orders": (context) => OrdersPage(),
           "/thank_you": (context) => ThankYouPage(),
         },
       ),

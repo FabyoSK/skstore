@@ -4,6 +4,7 @@ class ApiEndpoint {
   static final create_session = '/sessions';
 
   static final get_products = '/products/';
+  static final get_orders = '/orders';
 
   static final checkout = '/checkout';
 

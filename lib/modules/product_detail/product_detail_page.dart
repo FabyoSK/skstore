@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:store/shared/header/header.dart';
+import 'package:store/shared/widget/header/header.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/themes/app_text_styles.dart';

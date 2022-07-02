@@ -16,7 +16,9 @@ class CheckoutController {
                 "id": e.id,
                 "supplier_id": e.supplierId,
                 "quantity": e.quantity,
-                "price": e.price
+                "price": e.price,
+                "name": e.name,
+                "image_url": e.image ?? e.gallery!.first
               })
           .toList(),
     };
