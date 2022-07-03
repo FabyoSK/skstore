@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store/restart_widget.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/user_model.dart';
@@ -13,7 +14,18 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
-  String searchQuery = "";
+  final searchInputController = TextEditingController();
+
+  void restoreLastQuery() async {
+    final instance = await SharedPreferences.getInstance();
+    searchInputController.text = instance.getString("lastQuery") ?? "";
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    restoreLastQuery();
+  }
 
   void goToHomePage(BuildContext context) {
     Navigator.pushNamed(context, "/home");
@@ -29,6 +41,10 @@ class _HeaderState extends State<Header> {
 
   void goToLoginPage(BuildContext context) {
     Navigator.pushNamed(context, "/login");
+  }
+
+  void goToSearchPage(BuildContext context, String query) {
+    Navigator.pushNamed(context, "/search", arguments: query);
   }
 
   @override
@@ -47,20 +63,23 @@ class _HeaderState extends State<Header> {
               onTap: () => goToHomePage(context), child: const Text("SK Shop")),
           SizedBox(
             width: 400,
-            child: TextFormField(
+            child: TextField(
+              controller: searchInputController,
               decoration: const InputDecoration(
                 hintText: 'Search for...',
                 labelText: "Search for...",
+                suffixIcon: Icon(Icons.search),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
                 border: OutlineInputBorder(
                     // borderRadius: BorderRadius.circular(8),
                     ),
               ),
-              onChanged: (value) {
-                setState(
-                  () {
-                    searchQuery = value;
-                  },
-                );
+              onSubmitted: (value) async {
+                if (value.isNotEmpty) {
+                  goToSearchPage(context, value);
+                  final instance = await SharedPreferences.getInstance();
+                  instance.setString("lastQuery", value);
+                }
               },
             ),
           ),
@@ -98,9 +117,9 @@ class _HeaderState extends State<Header> {
                       child: InkWell(
                         onTap: () {
                           user?.clear();
-                          goToHomePage(context);
                           user = null;
                           RestartWidget.restartApp(context);
+                          goToHomePage(context);
                         },
                         child: Row(
                           children: const [

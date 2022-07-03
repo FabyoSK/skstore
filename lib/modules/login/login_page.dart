@@ -16,6 +16,14 @@ class _LoginPageState extends State<LoginPage> {
 
   final authController = AuthController();
 
+  void goToHomePage(BuildContext context) {
+    Navigator.pushNamed(context, "/home");
+  }
+
+  void goToRegisterPage(BuildContext context) {
+    Navigator.pushNamed(context, "/register");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +66,22 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 16,
                 ),
+                InkWell(
+                  onTap: () {
+                    goToRegisterPage(context);
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        "Don't have an account?",
+                        style: TextStyles.smallText,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 24,
+                ),
                 ElevatedButton(
                   child: Expanded(
                     child: Row(
@@ -72,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                         .login(email, password)
                         .then((r) => {
                               RestartWidget.restartApp(context),
-                              Navigator.pushNamed(context, "/home"),
+                              goToHomePage(context),
                             })
                         .catchError((error) => {
                               ScaffoldMessenger.of(context)

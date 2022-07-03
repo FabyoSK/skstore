@@ -9,6 +9,9 @@ class ApiEndpoint {
 
   static const checkout = '/checkout';
 
+  static const search = '/products/search';
+  static const get_categories = '/products/categories';
+
   static String resolve_endpoint(String path) {
     return api_url + path;
   }

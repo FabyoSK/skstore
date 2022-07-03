@@ -188,6 +188,7 @@ class _OrdersPageState extends State<OrdersPage> {
                       } else if (snapshot.connectionState ==
                           ConnectionState.done) {
                         if (snapshot.hasError) {
+                          // implement screen for when the user doesn't have any order
                           return Text(snapshot.error.toString());
                         } else if (snapshot.hasData) {
                           return _buildList(snapshot.data!);
