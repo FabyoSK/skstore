@@ -24,8 +24,14 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.pushNamed(context, "/register");
   }
 
+  void goToPage(BuildContext context, String page) {
+    print(page);
+    Navigator.pushNamed(context, page);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final prevRoute = ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
       body: Card(
         child: Center(
@@ -95,8 +101,8 @@ class _LoginPageState extends State<LoginPage> {
                     authController
                         .login(email, password)
                         .then((r) => {
-                              RestartWidget.restartApp(context),
                               goToHomePage(context),
+                              RestartWidget.restartApp(context),
                             })
                         .catchError((error) => {
                               ScaffoldMessenger.of(context)

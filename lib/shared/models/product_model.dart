@@ -13,6 +13,7 @@ class ProductModel {
   String? department;
   String material;
   int quantity = 1;
+  bool? hasDiscount = false;
 
   ProductModel({
     required this.id,
@@ -26,6 +27,7 @@ class ProductModel {
     this.gallery,
     this.discount,
     required this.supplierId,
+    this.hasDiscount,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -38,6 +40,7 @@ class ProductModel {
         gallery: json['gallery'],
         price: json['price'],
         discount: json['discount'],
+        hasDiscount: json['has_discount'],
         department: json['department'],
         material: json['material'],
       );

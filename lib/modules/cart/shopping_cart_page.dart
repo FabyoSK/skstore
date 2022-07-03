@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
+import 'package:store/shared/models/user_model.dart';
 import 'package:store/shared/themes/app_text_styles.dart';
 import 'package:store/shared/utils/format_currency.dart';
 import 'package:store/shared/widget/page_wrapper/page_wrapper.dart';
@@ -23,6 +24,14 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
 
   void goToCheckoutPage(BuildContext context, List<ProductModel> products) {
     Navigator.pushNamed(context, "/checkout", arguments: products);
+  }
+
+  void goToRegisterPage(BuildContext context) {
+    Navigator.pushNamed(context, "/register", arguments: true);
+  }
+
+  void goToLoginPage(BuildContext context) {
+    Navigator.pushNamed(context, "/login", arguments: "/shoppingcart");
   }
 
   void calculateTotal(List<ProductModel> products) {
@@ -54,7 +63,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     );
   }
 
-  Widget _buildTotalSummary(CartModel cart) {
+  Widget _buildTotalSummary(CartModel cart, UserModel? user) {
     calculateTotal(cart.getProducts());
     return Expanded(
       flex: 2,
@@ -91,7 +100,11 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                     children: [
                       ElevatedButton(
                           onPressed: () {
-                            goToCheckoutPage(context, cart.getProducts());
+                            if (user != null) {
+                              goToCheckoutPage(context, cart.getProducts());
+                            } else {
+                              _showUserNotLoginAlert();
+                            }
                           },
                           child: const Text('Checkout')),
                     ],
@@ -105,6 +118,39 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     );
   }
 
+  Future<void> _showUserNotLoginAlert() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Please login to continue'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Ops, you are not logged in'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Login'),
+              onPressed: () {
+                goToLoginPage(context);
+              },
+            ),
+            TextButton(
+              child: const Text('Create My Account'),
+              onPressed: () {
+                goToRegisterPage(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void refresh() {
     setState(() {});
   }
@@ -112,6 +158,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
+    final user = context.watch<UserModel?>();
+
     var cartProductCount = cart.getProducts().length;
 
     return PageWrapper(
@@ -134,7 +182,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
               ),
             ),
           ),
-          _buildTotalSummary(cart),
+          _buildTotalSummary(cart, user),
         ],
       ),
     );

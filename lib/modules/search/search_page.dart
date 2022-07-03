@@ -198,7 +198,12 @@ class _SearchPageState extends State<SearchPage> {
             Container(
               alignment: Alignment.center,
               child: FutureBuilder<List<ProductModel>>(
-                future: controller.search(name: productName),
+                future: controller.search(
+                  name: productName,
+                  material: material,
+                  minPrice: minPrice,
+                  maxPrice: maxPrice,
+                ),
                 builder: (
                   BuildContext context,
                   AsyncSnapshot<List<ProductModel>> snapshot,

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store/restart_widget.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/user_model.dart';
+import 'package:store/shared/themes/app_text_styles.dart';
 
 class Header extends StatefulWidget {
   const Header({Key? key}) : super(key: key);
@@ -60,7 +61,11 @@ class _HeaderState extends State<Header> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
-              onTap: () => goToHomePage(context), child: const Text("SK Shop")),
+              onTap: () => goToHomePage(context),
+              child: Text(
+                "SKStore",
+                style: TextStyles.bigTextBold,
+              )),
           SizedBox(
             width: 400,
             child: TextField(

@@ -25,6 +25,10 @@ class _RegisterPageState extends State<RegisterPage> {
     Navigator.pushNamed(context, "/login");
   }
 
+  void goBackToPage(BuildContext context) {
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
                 ElevatedButton(
@@ -106,8 +110,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     authController
                         .register(name, email, password)
                         .then((r) => {
-                              RestartWidget.restartApp(context),
                               goToHomePage(context),
+                              RestartWidget.restartApp(context),
                             })
                         .catchError((error) => {
                               ScaffoldMessenger.of(context)

@@ -159,13 +159,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             const SizedBox(
               width: 8.0,
             ),
-            Text(
-              "${product.discount}% Off",
-              style: TextStyle(
-                fontSize: 12.0,
-                color: Colors.blue[700],
-              ),
-            )
+            if (product.hasDiscount != null && product.hasDiscount!)
+              Text(
+                "${double.parse(product.discount!) * 100}% Off",
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.blue[700],
+                ),
+              )
           ],
         ),
       ],
