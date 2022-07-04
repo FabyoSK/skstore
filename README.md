@@ -1,16 +1,24 @@
-# store
+## Overview
+This app is build using Flutter, it uses Flutter's built in State Manager
 
-A new Flutter project.
+The folder structure of this app is divided in two main parts.
+- `modules` - All pages
+- `shared` - All shared widgets, controllers, styles, typography, etc
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+I used Flutter's built in State to keep the application simple and light, some pages has controllers to manage API requests. User info and shopping cart are shared globally in the app, shopping cart is store on SharedPreferences as well, to keep the user cart between sessions
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Features:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Filter products
+- Login
+- Register
+- Add to Shopping Cart
+- Orders page
+
+## Run the App
+To run the App you must simply run the following command
+```bash
+flutter run -d chrome --web-renderer html
+``` 
