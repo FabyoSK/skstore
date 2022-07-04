@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store/modules/search/search_controller.dart';
-import 'package:store/shared/api/api_endpoint.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/themes/app_text_styles.dart';
 import 'package:store/shared/widget/product_list/product_list.dart';
-import 'package:http/http.dart' as http;
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -102,7 +98,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _buildSearchContainer(List<String> materials) {
-    print(materials);
     return Card(
       elevation: 0,
       child: Padding(
@@ -148,7 +143,6 @@ class _SearchPageState extends State<SearchPage> {
                   minPrice: minPrice,
                   maxPrice: maxPrice,
                 );
-                // print(filteredProducts);
                 productListNotifier.value = filteredProducts;
               },
               child: const Text('Search'),

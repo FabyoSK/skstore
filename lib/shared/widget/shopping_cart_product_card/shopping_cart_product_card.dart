@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store/shared/models/product_model.dart';
+import 'package:store/shared/themes/app_text_styles.dart';
 
 class ShoppingCartProductCard extends StatelessWidget {
   final ProductModel product;
@@ -27,7 +28,7 @@ class ShoppingCartProductCard extends StatelessWidget {
           child: Column(
             children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
                     height: 200,
@@ -51,18 +52,17 @@ class ShoppingCartProductCard extends StatelessWidget {
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
                           product.name,
-                          style: const TextStyle(fontSize: 16.0, color: Colors.grey),
+                          style: TextStyles.textBold,
                         ),
                         const SizedBox(
                           height: 2.0,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
                               "\$${product.price}",
@@ -72,11 +72,6 @@ class ShoppingCartProductCard extends StatelessWidget {
                             const SizedBox(
                               width: 8.0,
                             ),
-
-                            // Text(
-                            //   "$discount\% off",
-                            //   style: TextStyle(fontSize: 12.0, color: Colors.grey),
-                            // ),
                           ],
                         ),
                         const SizedBox(

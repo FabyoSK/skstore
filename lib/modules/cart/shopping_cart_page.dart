@@ -47,7 +47,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     });
   }
 
-  Widget _buildHeader(cartProductCount) {
+  Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30),
       child: Row(
@@ -55,7 +55,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Shopping Card ($cartProductCount)",
+            "Shopping Card",
             style: TextStyles.title,
           ),
         ],
@@ -160,8 +160,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     final cart = context.watch<CartModel>();
     final user = context.watch<UserModel?>();
 
-    var cartProductCount = cart.getProducts().length;
-
     return PageWrapper(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +170,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _buildHeader(cartProductCount),
+                  _buildHeader(),
                   ShoppingCartProductList(
                     productList: cart.getProducts(),
                     notifyParent: refresh,

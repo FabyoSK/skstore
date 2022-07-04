@@ -56,7 +56,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
           child: Column(
             children: [
               orderSummary(),
-              // CheckoutSteps(),
               Row(
                 children: [
                   Expanded(

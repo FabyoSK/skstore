@@ -55,77 +55,77 @@ class _OrdersPageState extends State<OrdersPage> {
         child: Padding(
           padding: const EdgeInsets.all(30),
           child: ValueListenableBuilder(
-              valueListenable: currentOrderNotifier,
-              builder: (BuildContext context, Order? currentOrder, _) {
-                return currentOrder == null
-                    ? const Center(
-                        child: Text(
-                            "Please select an order to view more information."),
-                      )
-                    : Column(
-                        children: [
-                          Text(
-                            "Products",
-                            style: TextStyles.textBold,
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: currentOrder!.products.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              Product product = currentOrder!.products[index];
-                              double total = double.parse(product.price) *
-                                  double.parse(product.quantity);
+            valueListenable: currentOrderNotifier,
+            builder: (BuildContext context, Order? currentOrder, _) {
+              return currentOrder == null
+                  ? const Center(
+                      child: Text(
+                          "Please select an order to view more information."),
+                    )
+                  : Column(
+                      children: [
+                        Text(
+                          "Products",
+                          style: TextStyles.textBold,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: currentOrder!.products.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            Product product = currentOrder!.products[index];
+                            double total = double.parse(product.price) *
+                                double.parse(product.quantity);
 
-                              String formattedPrice = FormatCurrency.format(
-                                  double.parse(product.price));
-                              String formattedTotal =
-                                  FormatCurrency.format(total);
+                            String formattedPrice = FormatCurrency.format(
+                                double.parse(product.price));
+                            String formattedTotal =
+                                FormatCurrency.format(total);
 
-                              return Container(
-                                margin: const EdgeInsets.symmetric(vertical: 4),
-                                child: Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 100,
-                                          child: Image.network(
-                                            product.imageUrl,
-                                            fit: BoxFit.cover,
+                            return Container(
+                              margin: const EdgeInsets.symmetric(vertical: 4),
+                              child: Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 100,
+                                        child: Image.network(
+                                          product.imageUrl,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            product.name,
+                                            style: TextStyles.text,
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              product.name,
-                                              style: TextStyles.text,
-                                            ),
-                                            Text(
-                                                "Quantity: ${product.quantity}"),
-                                            Text("Price: $formattedPrice"),
-                                            Text("Total: $formattedTotal")
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                          Text("Quantity: ${product.quantity}"),
+                                          Text("Price: $formattedPrice"),
+                                          Text("Total: $formattedTotal")
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                          Text(
-                            "Total: ${calculateTotal(currentOrder!.products)}",
-                            style: TextStyles.bigTextBold,
-                          )
-                        ],
-                      );
-              }),
+                              ),
+                            );
+                          },
+                        ),
+                        Text(
+                          "Total: ${calculateTotal(currentOrder!.products)}",
+                          style: TextStyles.bigTextBold,
+                        )
+                      ],
+                    );
+            },
+          ),
         ),
       ),
     );
@@ -152,7 +152,7 @@ class _OrdersPageState extends State<OrdersPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Order N: ${order.id}",
+                      "Order: ${order.id}",
                       style: TextStyles.text,
                     ),
                     Text("Total: $total")
