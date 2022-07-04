@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:store/modules/checkout/checkout_controller.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:store/shared/models/user_model.dart';
@@ -17,6 +18,7 @@ class ShoppingCartPage extends StatefulWidget {
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   String totalSum = "0";
+  final checkoutController = CheckoutController();
 
   Future<List<ProductModel>> getShoppingCartProduct(CartModel cart) async {
     return cart.getProducts();
@@ -32,6 +34,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
 
   void goToLoginPage(BuildContext context) {
     Navigator.pushNamed(context, "/login", arguments: "/shoppingcart");
+  }
+
+  void goToThankYouPage(BuildContext context) {
+    Navigator.pushNamed(context, "/thank_you");
   }
 
   void calculateTotal(List<ProductModel> products) {
@@ -95,20 +101,21 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Expanded(
-                  child: Row(
-                    children: [
-                      ElevatedButton(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
                           onPressed: () {
                             if (user != null) {
-                              goToCheckoutPage(context, cart.getProducts());
+                              _showCheckoutAlert(cart);
                             } else {
                               _showUserNotLoginAlert();
                             }
                           },
                           child: const Text('Checkout')),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               )
             ],
@@ -132,18 +139,61 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
               ],
             ),
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Login'),
-              onPressed: () {
-                goToLoginPage(context);
-              },
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                TextButton(
+                  child: const Text('Login'),
+                  onPressed: () {
+                    goToLoginPage(context);
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text('Create My Account'),
+                  onPressed: () {
+                    goToRegisterPage(context);
+                  },
+                ),
+              ],
             ),
-            TextButton(
-              child: const Text('Create My Account'),
-              onPressed: () {
-                goToRegisterPage(context);
-              },
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showCheckoutAlert(CartModel cart) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Review your order",
+            style: TextStyles.textBold,
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Total: $totalSum'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    await checkoutController.checkout(cart.getProducts(), cart,
+                        () {
+                      goToThankYouPage(context);
+                    });
+                  },
+                  child: const Text('Confirm and Checkout'),
+                ),
+              ],
             ),
           ],
         );
@@ -174,7 +224,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                   ShoppingCartProductList(
                     productList: cart.getProducts(),
                     notifyParent: refresh,
-                    onCardTap: (context, b) {},
                   ),
                 ],
               ),

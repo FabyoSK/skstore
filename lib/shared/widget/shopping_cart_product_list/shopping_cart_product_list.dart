@@ -6,13 +6,9 @@ import 'package:store/shared/widget/shopping_cart_product_card/shopping_cart_pro
 
 class ShoppingCartProductList extends StatefulWidget {
   final List<ProductModel> productList;
-  final Function(BuildContext, ProductModel) onCardTap;
   final Function() notifyParent;
   const ShoppingCartProductList(
-      {Key? key,
-      required this.productList,
-      required this.onCardTap,
-      required this.notifyParent})
+      {Key? key, required this.productList, required this.notifyParent})
       : super(key: key);
 
   @override
@@ -36,9 +32,6 @@ class _ShoppingCartProductListState extends State<ShoppingCartProductList> {
           child: ShoppingCartProductCard(
             key: ValueKey(product.id),
             product: product,
-            onTap: () {
-              widget.onCardTap(context, product);
-            },
             onCartButtonTap: () {
               cart.add(product);
             },
