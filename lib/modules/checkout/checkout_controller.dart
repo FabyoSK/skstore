@@ -4,6 +4,7 @@ import 'package:store/shared/api/api_endpoint.dart';
 import 'package:store/shared/models/cart_model.dart';
 import 'package:store/shared/models/product_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:store/shared/models/user_model.dart';
 
 class CheckoutController {
   Future<void> checkout(
@@ -23,12 +24,13 @@ class CheckoutController {
           .toList(),
     };
 
+    String accessToken = await UserModel.getAccessToken();
+
     final response = await http.post(
       url,
       headers: {
         "Content-Type": "application/json",
-        "Authorization":
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjU2NzY1MDMxLCJleHAiOjE2NTczNjk4MzF9.4pTQGt5DS781rGNMkSB-7zgYJMNuNEmXilmrG7EXIg0"
+        "Authorization": "Bearer $accessToken"
       },
       body: json.encode(body),
     );
