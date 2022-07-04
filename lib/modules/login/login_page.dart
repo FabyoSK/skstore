@@ -25,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void goToPage(BuildContext context, String page) {
-    print(page);
     Navigator.pushNamed(context, page);
   }
 
@@ -69,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     });
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 InkWell(
@@ -85,15 +84,15 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
                 ElevatedButton(
                   child: Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('Submit'),
+                      children: const [
+                        Text('Submit'),
                       ],
                     ),
                   ),

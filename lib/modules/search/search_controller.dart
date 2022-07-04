@@ -12,13 +12,13 @@ class SearchController {
       int? maxPrice}) async {
     final url = Uri.parse(ApiEndpoint.resolve_endpoint(
         "${ApiEndpoint.search}?name=$name&material=$material&min_price=$minPrice&max_price=$maxPrice"));
-    print(material?.isEmpty);
+
     final response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
     );
+
     if (response.statusCode == 200) {
-      print(response.body.toString());
       return ProductModel.allProductFromJson(response.body.toString());
     } else {
       final errorResponse = jsonDecode(response.body.toString());

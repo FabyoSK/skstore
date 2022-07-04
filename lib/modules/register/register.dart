@@ -78,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     });
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 InkWell(
@@ -101,8 +101,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('Submit'),
+                      children: const [
+                        Text('Submit'),
                       ],
                     ),
                   ),

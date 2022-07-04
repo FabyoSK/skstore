@@ -70,9 +70,9 @@ class _OrdersPageState extends State<OrdersPage> {
                         ),
                         ListView.builder(
                           shrinkWrap: true,
-                          itemCount: currentOrder!.products.length,
+                          itemCount: currentOrder.products.length,
                           itemBuilder: (BuildContext context, int index) {
-                            Product product = currentOrder!.products[index];
+                            Product product = currentOrder.products[index];
                             double total = double.parse(product.price) *
                                 double.parse(product.quantity);
 
@@ -119,7 +119,7 @@ class _OrdersPageState extends State<OrdersPage> {
                           },
                         ),
                         Text(
-                          "Total: ${calculateTotal(currentOrder!.products)}",
+                          "Total: ${calculateTotal(currentOrder.products)}",
                           style: TextStyles.bigTextBold,
                         )
                       ],

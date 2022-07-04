@@ -40,7 +40,7 @@ class _SearchPageState extends State<SearchPage> {
     return SizedBox(
       width: 200,
       child: Padding(
-        padding: EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(15.0),
         child: Autocomplete<String>(
           optionsBuilder: (TextEditingValue textEditingValue) {
             return options
@@ -70,10 +70,10 @@ class _SearchPageState extends State<SearchPage> {
             return Align(
               alignment: Alignment.topLeft,
               child: Material(
-                child: Container(
+                child: SizedBox(
                   width: 300,
                   child: ListView.builder(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     itemCount: options.length,
                     itemBuilder: (BuildContext context, int index) {
                       final String option = options.elementAt(index);
@@ -110,10 +110,10 @@ class _SearchPageState extends State<SearchPage> {
             SizedBox(
               width: 200,
               child: Padding(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: TextField(
                   style: const TextStyle(fontWeight: FontWeight.bold),
-                  decoration: InputDecoration(labelText: "Min price"),
+                  decoration: const InputDecoration(labelText: "Min price"),
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
                     minPrice = int.parse(value);
@@ -127,7 +127,7 @@ class _SearchPageState extends State<SearchPage> {
                 padding: const EdgeInsets.all(15),
                 child: TextField(
                   style: const TextStyle(fontWeight: FontWeight.bold),
-                  decoration: InputDecoration(labelText: "Max price"),
+                  decoration: const InputDecoration(labelText: "Max price"),
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
                     maxPrice = int.parse(value);

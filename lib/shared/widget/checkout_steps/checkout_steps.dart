@@ -34,9 +34,7 @@ class _CheckoutStepsState extends State<CheckoutSteps> {
           setState(() {
             _activeStepIndex += 1;
           });
-        } else {
-          print('Submitted');
-        }
+        } else {}
       },
       onStepCancel: () {
         if (_activeStepIndex == 0) {
